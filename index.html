@@ -3,7 +3,7 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-    <title> Esther's University Memories </title>
+    <title> The Golden Age of Taipei </title>
 
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css' rel='stylesheet' />
@@ -26,7 +26,9 @@
       //Call in your Map
       var map = new mapboxgl.Map({
         container: 'map',
-        style: 'mapbox://styles/estherjan/ckgq8inxw3f4z1amq7jx9om28'
+        style: 'mapbox://styles/estherjan/ckgq8inxw3f4z1amq7jx9om28',
+        center: [121.509, 25.059], // starting position [lng, lat]
+        zoom: 16 // starting zoom
       });
 
      // Initialize the geolocate control.
@@ -38,88 +40,103 @@
          });
 
   // Add the control to the map.
-    map.addControl(geolocate);
-    map.on('load', function() {
-    geolocate.trigger();
-    //Add your feature collection here
-    map.addSource('places', {
-          'type': 'geojson',
-          'data': {
-    "type": "FeatureCollection",
-    "features": [
-      {
-        "type": "Feature",
-        "properties": {
-          "title": "NTUST Campus",
-          "description": "Students' canteen where I had numerous delicious bentos."
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            121.54261,
-            25.013944
+  //map.addControl(geolocate);
+  map.on('load', function() {
+  //geolocate.trigger();
+  //Add your feature collection here
+  map.addSource('places', {
+        'type': 'geojson',
+        'data': {
+  "type": "FeatureCollection",
+  "features": [
+            {
+            "type": "Feature",
+              "properties": {
+                "title": "Vintage Tea House",
+                "description": "Well preserved tea house built in 1851, the Ching Dynasty."
+              },
+              "geometry": {
+                "type": "Point",
+                "coordinates": [
+                  121.50973,
+                  25.057719
           ]
         }
       },
       {
         "type": "Feature",
-        "properties": {
-          "title": "Gongguan MRT",
-          "description": "Bus station that I waited for numerous times"
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            121.53426,
-            25.014917
+      "properties": {
+        "title": "Peacock Bistro",
+        "description": "A secret restaurant hidden in the rear section of a historic Taiwanese architecture. Serves Taiwanese and Western fusion cuisines."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.50955,
+          25.059089
+        ]
+        }
+      },
+      {
+        "type": "Feature",
+      "properties": {
+        "title": "Sunrice Yehjinfa",
+        "description": "A store that sells and educates visitors delicacies made with rice."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.50922,
+          25.061435
           ]
         }
       },
       {
         "type": "Feature",
-        "properties": {
-          "title": "Picnic Cafe",
-          "description": "The cafe that inspired me to open a cafe in the future."
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            121.53305,
-            25.020366
+      "properties": {
+        "title": "Koo's Mansion",
+        "description": "The Koo residence that remains standing here today was built by Koo Xianrong circa 1920, and is one of renowned luxury residences that combine Chinese and Western style."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.5088,
+          25.058769
           ]
         }
       },
       {
         "type": "Feature",
-        "properties": {
-          "title": "AGCT apartment",
-          "description": "Best place to stay up late and have desserts."
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            121.53323,
-            25.021324
+      "properties": {
+        "title": "No. 5 Gate of Tamsui River",
+        "description": "Great place for a walk and a drink by the riverside, access the scenic view of Tamsui river through this gate!"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.50814,
+          25.056891
           ]
         }
       },
       {
         "type": "Feature",
-        "properties": {
-          "title": "Shida Night Market",
-          "description": "Best place to shop and eat with friends."
-        },
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            121.52895,
-            25.023642
+      "properties": {
+        "title": "Sin Hong Choon Tea Company",
+        "description": "An old heritage building of a tea company, now renovated as a tea museum."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.51261,
+          25.057105
           ]
         }
       }
     ]
           }
       });
+
       // Add a layer showing the places.
       map.addLayer({
           'id': 'places',
@@ -135,11 +152,12 @@
       map.on('click', 'places', function(e) {
           var coordinates = e.features[0].geometry.coordinates.slice();
           var description = e.features[0].properties.description;
+          var title = e.features[0].properties.title;
 
           new mapboxgl.Popup()
-              .setLngLat(coordinates)
-              .setHTML(description)
-              .addTo(map);
+            .setLngLat(coordinates)
+            .setHTML('<h3>' + title + '</h3><p>' + description + '</p>')
+            .addTo(map);
       });
       });
 </script>
